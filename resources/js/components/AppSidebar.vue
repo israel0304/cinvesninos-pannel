@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { Home, Users, Store, Package, ClipboardList, CalendarCheck, ScanBarcode, LayoutTemplate, FileDown, BarChart, Settings, Folder, BookOpen } from 'lucide-vue-next';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -17,13 +18,48 @@ import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
 import { dashboard } from '@/routes';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
+const page = usePage();
+
+const role_id = computed(() => page.props.auth.user?.role_id || 1); // fallback to 1 (Admin) for dev testing if missing
+
+const mainNavItems = computed<NavItem[]>(() => {
+    const items: NavItem[] = [
+        { title: 'Inicio', href: dashboard(), icon: Home },
+    ];
+
+    if (role_id.value === 1) { // Administrador
+        items.push(
+            { title: 'Usuarios', href: '/users', icon: Users },
+            { title: 'Stands', href: '#', icon: Store },
+            { title: 'Registro de inventario', href: '#', icon: Package },
+            { title: 'Solicitud de material', href: '#', icon: ClipboardList },
+            { title: 'Registro de Asistencia', href: '#', icon: CalendarCheck },
+            { title: 'Entrega de material', href: '#', icon: ScanBarcode },
+            { title: 'Plantillas', href: '#', icon: LayoutTemplate },
+            { title: 'Descargas', href: '#', icon: FileDown },
+            { title: 'Reportes', href: '#', icon: BarChart },
+            { title: 'Ajustes', href: '#', icon: Settings }
+        );
+    } else if (role_id.value === 2) { // Staff
+        items.push(
+            { title: 'Registro de Asistencia', href: '#', icon: CalendarCheck },
+            { title: 'Entrega de material', href: '#', icon: ScanBarcode }
+        );
+    } else if (role_id.value === 3) { // Tallerista
+        items.push(
+            { title: 'Stands', href: '#', icon: Store },
+            { title: 'Solicitud de material', href: '#', icon: ClipboardList },
+            { title: 'Descargas', href: '#', icon: FileDown }
+        );
+    } else if (role_id.value === 4) { // Participante
+        items.push(
+            { title: 'Stands', href: '#', icon: Store },
+            { title: 'Descargas', href: '#', icon: FileDown }
+        );
+    }
+
+    return items;
+});
 
 const footerNavItems: NavItem[] = [
     {

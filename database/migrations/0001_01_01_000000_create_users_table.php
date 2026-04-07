@@ -13,11 +13,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('dni')->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('phone')->nullable();
+            $table->string('extension')->nullable();
+            $table->enum('tshirt_size', ['XS', 'S', 'M', 'L', 'XL', 'XXL'])->nullable();
+            $table->string('profile_photo_path', 2048)->nullable();
+            $table->foreignId('role_id')->constrained('roles');
+            $table->unsignedBigInteger('stand_id')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
 

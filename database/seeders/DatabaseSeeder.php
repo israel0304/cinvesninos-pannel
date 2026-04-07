@@ -13,11 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $adminRole = \App\Models\Role::create(['name' => 'Administrator']);
+        $staffRole = \App\Models\Role::create(['name' => 'Staff']);
+        $talleristaRole = \App\Models\Role::create(['name' => 'Tallerista']);
+        $participanteRole = \App\Models\Role::create(['name' => 'Participante']);
 
-        User::factory()->create([
+        \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'dni' => 'ADMIN001',
+            'role_id' => $adminRole->id,
+            'is_active' => true,
         ]);
     }
 }
