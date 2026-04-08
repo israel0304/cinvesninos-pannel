@@ -264,7 +264,7 @@ const handleFileUpload = (event: Event) => {
 
                             <!-- Avatar + Nombre -->
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
+                                <div class="flex items-center" >
                                     <div class="h-[38px] w-[38px] flex-shrink-0 rounded-full border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 flex items-center justify-center overflow-hidden">
                                         <img v-if="user.profile_photo_path" :src="'/storage/' + user.profile_photo_path" class="h-full w-full object-cover">
                                         <svg v-else class="h-6 w-6 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -273,11 +273,10 @@ const handleFileUpload = (event: Event) => {
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900 dark:text-white">{{ user.first_name }} {{ user.last_name }}</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">{{ user.email }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <!-- Email -->
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{{ user.email }}</td>
                             <!-- Perfil  -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">{{ user.role?.name || '-' }}</td>
                             <!-- Unidad / Depto -->
