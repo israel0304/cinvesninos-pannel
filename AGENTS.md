@@ -42,3 +42,11 @@ php artisan tinker
 - Stock logic: `committed` vs `delivered` states
 - SoftDeletes on users/requests for audit trail
 - Settings table drives real-time feature flags
+
+## Recent Updates
+
+- **User Model:** Split `name` into `first_name` + `last_name`
+- **Registration:** Requires `dni` (unique) and `role_id` (FK)
+- New users automatically receive "Participante" role
+- Tests: Run with `composer test` (includes lint + PHPUnit)
+- **GitHub Actions:** PHP 8.2, Node.js 22 - workflows configured in `.github/workflows/`

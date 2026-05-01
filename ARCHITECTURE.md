@@ -25,7 +25,7 @@ Gestión de usuarios con jerarquía de permisos y SoftDeletes para conservar his
 
 - **`roles`**: Define niveles de acceso (Admin, Staff, Tallerista, Participante).
 - **`participation_roles`**: Roles específicos de participación (ej. Niño, Joven, Adulto).
-- **`users`**: Tabla central de usuarios. Incluye `email` (unique), `last_name`, `tshirt_size`, `profile_photo_path`, `unit_id`, `department_id`, `participation_role_id`, y relación `stand_id`. Soporta 2FA con columnas `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`.
+- **`users`**: Tabla central de usuarios. Incluye `first_name`, `last_name`, `dni` (unique), `email` (unique), `phone`, `extension`, `tshirt_size`, `profile_photo_path`, `role_id` (FK requerida), `unit_id`, `department_id`, `participation_role_id`, y relación `stand_id`. Soporta 2FA con columnas `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`.
 
 ### 🏗️ Módulo 2: Infraestructura y Espacios
 
@@ -76,6 +76,18 @@ Definición de la jerarquía institucional.
 1.  **Administrador:** Crea stands, asigna responsables y gestiona el inventario global.
 2.  **Responsable (Tallerista):** Gestiona a su propio equipo (Participantes) y solicita materiales.
 3.  **Participante:** Rol de privilegios mínimos para validar datos personales, elegir talla de playera y descargar su constancia.
+
+### 📝 Registro de Usuarios
+
+- **Campos requeridos en registro:** `first_name`, `last_name`, `dni` (único), `email` (único), `password`
+- **Asignación automática:** Nuevos usuarios reciben el rol "Participante" por defecto
+- **Validaciones:** `dni` debe ser único en el sistema, `email` debe ser único y válido
+
+### 🔧 GitHub Actions
+
+- **PHP version:** 8.2 (compatible con `composer.json` que requiere `^8.2`)
+- **Node.js version:** 22
+- **Workflows:** `tests.yml` y `lint.yml` configurados correctamente
 
 ### 📦 Lógica de Stock
 
