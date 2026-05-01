@@ -24,7 +24,8 @@ El sistema es una plataforma de gestión integral diseñada para centralizar la 
 Gestión de usuarios con jerarquía de permisos y SoftDeletes para conservar historial.
 
 - **`roles`**: Define niveles de acceso (Admin, Staff, Tallerista, Participante).
-- **`users`**: Tabla central de usuarios. Incluye `email` (unique), `tshirt_size`, `profile_photo_path`, `unit_id`, `department_id` y relación `stand_id`.
+- **`participation_roles`**: Roles específicos de participación (ej. Niño, Joven, Adulto).
+- **`users`**: Tabla central de usuarios. Incluye `email` (unique), `last_name`, `tshirt_size`, `profile_photo_path`, `unit_id`, `department_id`, `participation_role_id`, y relación `stand_id`. Soporta 2FA con columnas `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`.
 
 ### 🏗️ Módulo 2: Infraestructura y Espacios
 
@@ -90,7 +91,8 @@ El sistema utiliza la tabla `settings` para validar procesos en tiempo real:
 
 ### 🔒 Seguridad Adicional
 
-- **2FA:** Autenticación de dos factores via Laravel Fortify
+- **2FA:** Autenticación de dos factores via Laravel Fortify (columnas: `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`)
+- **Verificación de Email:** Campo `email_verified_at` para tracking de verificación
 - **Appearance:** Sistema de tema oscuro/claro configurable por usuario
 - **Navigación SPA:** Inertia.js para experiencia fluida sin recargas
 
